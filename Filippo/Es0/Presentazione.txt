@@ -1,0 +1,3 @@
+Ciao, mi chiamo Luca Tabbia, ho 23 anni e ho studiato cucina all'alberghiero. Mi sono diplomato con 80 senza sforzo e poi ho iniziato la mia carriera nella cucina. Ho lavorato come sous chef per un anno e mezzo,
+per poi capire che non era la professione adatta a me. Ho inziato a cambiare lavori, provando numerose esperienze, finché un mio amico non mi ha spronato ad entrare nel campo della programmazione. 
+Da quel momento ho studiato da solo javascript, css e html in modo da entrare nel corso. Non ho altre esperienze nel campo della programmazione. 
