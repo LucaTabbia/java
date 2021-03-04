@@ -40,12 +40,18 @@ public class Node extends List{
 
     @Override
     public List remove(int x) {
-        return null;
+        if (x==this.value){
+
+        } else {
+            this.next= next.remove(x);
+        }
     }
 
     @Override
     public List removeAtIndex(int i) {
-        return null;
+        if (i==0 || i<0){
+            this= this.next;
+        }
     }
 
     @Override
@@ -55,11 +61,25 @@ public class Node extends List{
 
     @Override
     public boolean pari() {
+        if (this.value%2==0 || this.value==0){
+            this.next.pari();
+        } else {
+            return false;
+        }
         return false;
     }
 
     @Override
     public boolean ordinata(int next) {
+        if(next==0) {
+            next = this.value;
+        }
+        if (next <= this.value){
+            next= this.value;
+            this.next.ordinata(next);
+        } else {
+            return false;
+        }
         return false;
     }
 }

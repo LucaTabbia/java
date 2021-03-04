@@ -38,12 +38,12 @@ public class Nil extends List{
 
     @Override
     public boolean pari() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean ordinata(int next) {
-        return false;
+        return true;
     }
 
 }
