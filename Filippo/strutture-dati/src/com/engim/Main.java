@@ -19,5 +19,7 @@ public class Main {
         l = l.addLast(4);
         System.out.println(l);
 
+        System.out.println(l.ordinataCrescenteDecrescente(Ordine.Start,0));
+
     }
 }
