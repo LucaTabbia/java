@@ -23,17 +23,19 @@ public class Nil extends List{
 
     @Override
     public List remove(int x) {
-        return null;
+        System.out.println("valore non trovato");
+        return this;
     }
 
     @Override
     public List removeAtIndex(int i) {
-        return null;
+        System.out.println("indice non trovato");
+        return this;
     }
 
     @Override
     public List doppio() {
-        return null;
+        return this;
     }
 
     @Override

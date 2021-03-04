@@ -40,23 +40,28 @@ public class Node extends List{
 
     @Override
     public List remove(int x) {
-        if (x==this.value){
-
+        if (this.value==x){
+            return this.next;
         } else {
-            this.next= next.remove(x);
+            this.next= this.next.remove(x);
         }
+        return this;
     }
 
     @Override
     public List removeAtIndex(int i) {
-        if (i==0 || i<0){
-            this= this.next;
+        if (i<=-1){
+            return this.next;
+        } else{
+            this.next= this.next.removeAtIndex(i-1);
         }
+        return this;
     }
 
     @Override
     public List doppio() {
-        return null;
+        this.next= new Node(this.value,this.next.doppio());
+        return this;
     }
 
     @Override
