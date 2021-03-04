@@ -50,6 +50,16 @@ public class Nil extends List{
 
     @Override
     public boolean ordinataCrescenteDecrescente(Ordine ordine, int value) {
+        if (ordine== ordine.Asc) {
+            System.out.println("ordine ascendente");
+            return true;
+        } if (ordine== ordine.Desc) {
+            System.out.println("ordine decrescente");
+            return true;
+        } if (ordine== ordine.Start) {
+            System.out.println("Non ci sono valori sufficienti");
+            return false;
+        }
         return true;
     }
 
