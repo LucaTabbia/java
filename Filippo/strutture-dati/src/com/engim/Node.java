@@ -87,30 +87,4 @@ public class Node extends List{
         }
         return false;
     }
-
-    @Override
-    public boolean ordinataCrescenteDecrescente(Ordine ordine, int value) {
-        if(value==0 && ordine==ordine.Start && value== this.value){
-            return this.next.ordinataCrescenteDecrescente(ordine.Start,this.value);
-        }
-        if(this.value>value && ordine==ordine.Start){
-            return this.next.ordinataCrescenteDecrescente(ordine.Asc, this.value);
-        }
-        if(this.value<value && ordine==ordine.Start){
-            return this.next.ordinataCrescenteDecrescente(ordine.Desc, this.value);
-        }
-        if(this.value>=value && ordine==ordine.Asc){
-            return this.next.ordinataCrescenteDecrescente(ordine.Asc, this.value);
-        }
-        if(this.value<=value && ordine==ordine.Desc){
-            return this.next.ordinataCrescenteDecrescente(ordine.Desc, this.value);
-        }
-        if(this.value>value && ordine==ordine.Desc){
-            return false;
-        }
-        if(this.value<value && ordine==ordine.Asc){
-            return false;
-        }
-        return false;
-    }
 }

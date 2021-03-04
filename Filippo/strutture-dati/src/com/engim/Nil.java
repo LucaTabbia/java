@@ -48,9 +48,4 @@ public class Nil extends List{
         return true;
     }
 
-    @Override
-    public boolean ordinataCrescenteDecrescente(Ordine ordine, int value) {
-        return true;
-    }
-
 }

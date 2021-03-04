@@ -22,6 +22,6 @@ public abstract class List {
     public abstract boolean ordinata(int next);
 
     // per i forti: true se è ordinata crescente o descrescente, false altrimenti
-    public abstract boolean ordinataCrescenteDecrescente(Ordine ordine, int value);
+    // public abstract boolean ordinataCrescenteDecrescente(....)
     // suggerimento: io definirei una enumerazione
 }
