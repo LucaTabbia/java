@@ -1,12 +1,20 @@
 package com.example.springsocial.model;
 
+import javax.persistence.*;
 import java.util.Date;
-
+@Entity
 public class Comment {
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="owner", referencedColumnName = "id")
     private User Owner;
-    private Photo photo;
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="post", referencedColumnName = "id")
+    private Post post;
     private String text;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     public com.example.springsocial.model.User getOwner() {
@@ -17,12 +25,12 @@ public class Comment {
         Owner = owner;
     }
 
-    public Photo getPhoto() {
-        return photo;
+    public Post getPhoto() {
+        return post;
     }
 
-    public void setPhoto(Photo photo) {
-        this.photo = photo;
+    public void setPhoto(Post post) {
+        this.post = post;
     }
 
     public String getText() {

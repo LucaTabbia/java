@@ -1,27 +1,18 @@
 package com.example.springsocial.model;
 
 import javax.persistence.*;
-
 @Entity
-public class Photo {
+public class PostLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch=FetchType.EAGER)
+    @ManyToOne(fetch= FetchType.EAGER)
     @JoinColumn(name="owner", referencedColumnName = "id")
     private User owner;
-
-    @Lob
-    private byte[] picture;
-
-    public byte[] getPicture() {
-        return picture;
-    }
-
-    public void setPicture(byte[] picture) {
-        this.picture = picture;
-    }
+    @ManyToOne(fetch= FetchType.EAGER)
+    @JoinColumn(name="post", referencedColumnName = "id")
+    private Post post;
 
     public com.example.springsocial.model.User getOwner() {
         return owner;
@@ -29,6 +20,14 @@ public class Photo {
 
     public void setOwner(com.example.springsocial.model.User owner) {
         this.owner = owner;
+    }
+
+    public Post getPhoto() {
+        return post;
+    }
+
+    public void setPhoto(Post post) {
+        this.post = post;
     }
 
     public Long getId() {
