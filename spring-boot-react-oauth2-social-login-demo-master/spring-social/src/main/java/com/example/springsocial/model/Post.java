@@ -1,5 +1,7 @@
 package com.example.springsocial.model;
 
+import net.minidev.json.annotate.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +18,7 @@ public class Post {
     @JoinColumn(name="owner", referencedColumnName = "id")
     private User owner;
 
+    @JsonIgnore
     @OneToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="photo", referencedColumnName = "id")
     private Photo photo;

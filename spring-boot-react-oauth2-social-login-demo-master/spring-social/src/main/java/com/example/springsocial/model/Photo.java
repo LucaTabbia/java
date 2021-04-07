@@ -27,15 +27,9 @@ public class Photo {
         return owner;
     }
 
-    public void setOwner(com.example.springsocial.model.User owner) {
-        this.owner = owner;
-    }
+    public void setOwner(com.example.springsocial.model.User owner) { this.owner = owner; }
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public void setId(Long id) { this.id = id; }
 }
