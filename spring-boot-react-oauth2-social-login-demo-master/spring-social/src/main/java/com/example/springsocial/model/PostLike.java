@@ -1,5 +1,7 @@
 package com.example.springsocial.model;
 
+import net.minidev.json.annotate.JsonIgnore;
+
 import javax.persistence.*;
 @Entity
 public class PostLike {
@@ -10,6 +12,8 @@ public class PostLike {
     @ManyToOne(fetch= FetchType.EAGER)
     @JoinColumn(name="owner", referencedColumnName = "id")
     private User owner;
+
+    @JsonIgnore
     @ManyToOne(fetch= FetchType.EAGER)
     @JoinColumn(name="post", referencedColumnName = "id")
     private Post post;
@@ -22,11 +26,11 @@ public class PostLike {
         this.owner = owner;
     }
 
-    public Post getPhoto() {
+    public Post getPost() {
         return post;
     }
 
-    public void setPhoto(Post post) {
+    public void setPost(Post post) {
         this.post = post;
     }
 

@@ -1,5 +1,7 @@
 package com.example.springsocial.model;
 
+import net.minidev.json.annotate.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,10 +10,12 @@ public class Photo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="owner", referencedColumnName = "id")
     private User owner;
 
+    @JsonIgnore
     @Lob
     private byte[] picture;
 
