@@ -6,7 +6,7 @@ import java.util.Date;
 public class Comment {
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="owner", referencedColumnName = "id")
-    private User Owner;
+    private User owner;
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="post", referencedColumnName = "id")
     private Post post;
@@ -18,18 +18,18 @@ public class Comment {
     private Long id;
 
     public com.example.springsocial.model.User getOwner() {
-        return Owner;
+        return owner;
     }
 
     public void setOwner(com.example.springsocial.model.User owner) {
-        Owner = owner;
+        this.owner = owner;
     }
 
-    public Post getPhoto() {
+    public Post getPost() {
         return post;
     }
 
-    public void setPhoto(Post post) {
+    public void setPost(Post post) {
         this.post = post;
     }
 

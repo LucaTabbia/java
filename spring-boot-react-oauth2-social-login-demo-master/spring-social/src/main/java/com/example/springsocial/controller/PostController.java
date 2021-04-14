@@ -2,13 +2,8 @@ package com.example.springsocial.controller;
 
 import com.example.springsocial.exception.ResourceNotFoundException;
 import com.example.springsocial.model.*;
-import com.example.springsocial.payload.PostAddRequest;
-import com.example.springsocial.payload.PostLikeRequest;
-import com.example.springsocial.payload.PostResponse;
-import com.example.springsocial.repository.PhotoRepository;
-import com.example.springsocial.repository.PostLikeRepository;
-import com.example.springsocial.repository.PostRepository;
-import com.example.springsocial.repository.UserRepository;
+import com.example.springsocial.payload.*;
+import com.example.springsocial.repository.*;
 import com.example.springsocial.security.CurrentUser;
 import com.example.springsocial.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +30,8 @@ public class PostController {
     private UserRepository userRepository;
     @Autowired
     private PostLikeRepository postLikeRepository;
+    @Autowired
+    private CommentRepository commentRepository;
 
     @GetMapping("/post/all")
 //    @PreAuthorize("hasRole('USER')")
@@ -83,8 +80,8 @@ public class PostController {
 
         return photoRepository.save(photo).getId();
     }
-    @PostMapping("/post/add/like")
-    public boolean addLike(@CurrentUser UserPrincipal userPrincipal, @RequestBody PostLikeRequest postLikeRequest){
+    @PostMapping("/post/toggle/like")
+    public boolean toggleLike(@CurrentUser UserPrincipal userPrincipal, @RequestBody PostLikeRequest postLikeRequest){
         User currentUser= userRepository.findById(userPrincipal.getId())
                 .orElseThrow(()-> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
 
@@ -100,6 +97,11 @@ public class PostController {
             postLikeRepository.save(postLike);
             currentPost.getPostLikes().add(postLike);
             postRepository.save(currentPost);
+        }else{
+            PostLike postLike= postLikeRepository.getByOwnerAndPost(currentUser, currentPost);
+            postLikeRepository.delete(postLike);
+            currentPost.getPostLikes().remove(postLike);
+            postRepository.save(currentPost);
         }
 
         return response;
@@ -111,6 +113,69 @@ public class PostController {
         return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG)
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachement; filename=\""+ "1.png" + "\"")
                 .body(new ByteArrayResource(photo.getPicture()));
+    }
+    @PostMapping("/post/add/comment")
+    public void addComment(@CurrentUser UserPrincipal userPrincipal, @RequestBody CommentRequest commentRequest){
+        User currentUser= userRepository.findById(userPrincipal.getId())
+                .orElseThrow(()-> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
+
+        Post currentPost= postRepository.findById(commentRequest.getIdPost())
+                .orElseThrow(()-> new ResourceNotFoundException("Post", "id", commentRequest.getIdPost()));
+
+        Comment comment= new Comment();
+        comment.setOwner(currentUser);
+        comment.setPost(currentPost);
+        comment.setText(commentRequest.getText());
+        comment.setDate(new Date());
+        commentRepository.save(comment);
+        currentPost.getComments().add(comment);
+        postRepository.save(currentPost);
+    }
+    @PostMapping("/post/modify/comment")
+    public boolean modifyComment(@CurrentUser UserPrincipal userPrincipal, @RequestBody CommentChangeRequest commentChangeRequest){
+        User currentUser= userRepository.findById(userPrincipal.getId())
+                .orElseThrow(()-> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
+
+        Post currentPost= postRepository.findById(commentChangeRequest.getIdPost())
+                .orElseThrow(()-> new ResourceNotFoundException("Post", "id", commentChangeRequest.getIdPost()));
+
+        Comment currentComment= commentRepository.findById(commentChangeRequest.getCommentId())
+                .orElseThrow(()-> new ResourceNotFoundException("Comment", "id", commentChangeRequest.getCommentId()));
+
+        boolean response= false;
+        if(currentComment!=null && currentUser.equals(currentComment.getOwner())) {
+            response= true;
+
+            commentRepository.delete(currentComment);
+            currentPost.getComments().remove(currentComment);
+
+            currentComment.setText(commentChangeRequest.getText());
+            currentComment.setDate(new Date());
+            currentPost.getComments().add(currentComment);
+            postRepository.save(currentPost);
+        }
+        return response;
+    }
+    @PostMapping("/post/remove/comment")
+    public boolean removeComment(@CurrentUser UserPrincipal userPrincipal, @RequestBody CommentRemoveRequest commentRemoveRequest){
+        User currentUser= userRepository.findById(userPrincipal.getId())
+                .orElseThrow(()-> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
+
+        Post currentPost= postRepository.findById(commentRemoveRequest.getIdPost())
+                .orElseThrow(()-> new ResourceNotFoundException("Post", "id", commentRemoveRequest.getIdPost()));
+
+        Comment currentComment= commentRepository.findById(commentRemoveRequest.getCommentId())
+                .orElseThrow(()-> new ResourceNotFoundException("Comment", "id", commentRemoveRequest.getCommentId()));
+
+        boolean response= false;
+        if(currentComment!=null && currentUser.equals(currentComment.getOwner())) {
+            response= true;
+
+            commentRepository.delete(currentComment);
+            currentPost.getComments().remove(currentComment);
+            postRepository.save(currentPost);
+        }
+        return response;
     }
 
 }
